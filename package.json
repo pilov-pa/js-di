@@ -1,11 +1,22 @@
 {
   "name": "js-di",
   "version": "0.1.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Pilov Aleksey",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pilov-pa/js-di.git"
+  },
+  "keywords": [
+    "di"
+  ],
+  "bugs": {
+    "url": "https://github.com/pilov-pa/js-di/issues"
+  },
+  "homepage": "https://github.com/pilov-pa/js-di#readme",
+  "description": ""
 }
