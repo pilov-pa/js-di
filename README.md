@@ -5,31 +5,31 @@ import DI from "simple-js-di";
 
 class Foo
 {
-  bar = null;
-  construct(bar) {
-    this.bar = bar;
-  }
-  
-  getBarName() {
-    return bar.name;
-  }
+    bar = null;
+    constructor(bar) {
+        this.bar = bar;
+    }
+
+    getBarName() {
+        return this.bar.name;
+    }
 }
 
 class Bar
 {
-  name = null;
-  construct(name) {
-    this.name = name;
-  }
+    name = null;
+    constructor(name) {
+        this.name = name;
+    }
 }
 
 let di = new DI();
 di.add("foo", Foo, ["bar"]);
 di.add("bar", Bar, ["bar_name"]);
 di.add("bar_name", "Bar name!");
-
 const foo = di.resolve("foo");
-console.log(foo.getBarName); // Bar name!
+
+console.log(foo.getBarName()); // Bar name!
 ```
 
 Using method `add()`
