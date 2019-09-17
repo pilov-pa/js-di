@@ -1,6 +1,6 @@
 # js-di
 This is a pretty simple DI-container for JavaScript.
-```
+```javascript
 import DI from "simple-js-di";
 
 class Foo
