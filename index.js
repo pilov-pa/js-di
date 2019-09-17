@@ -17,7 +17,6 @@ export default class DI {
     services = {};
 
     add(name, className, args = [], shared = true) {
-        console.log(typeof className);
         this.services[name] = new Service(name, className, args, shared);
     }
 
