@@ -34,6 +34,7 @@ console.log(foo.getBarName); // Bar name!
 
 Using method `add()`
 ================
+Adds new dependency to the container.
 
 Method `add()` has 4 arguments:
 * name - the dependency alias
@@ -56,3 +57,9 @@ This argument is array of class dependencies. All dependencies should be registr
 Argument `shared`
 ---------------
 If this argument is false, each  resolving will return a new instanse of the class. If this argument is true, only the first resolving will create a new instance, the next calls will use the alredy created instance. Default true.
+
+Using method `resolve()`
+================
+Resolving the dependency by the name. All subdependencies will be resolved automatically if necessary.
+
+Method has only one argument: name.
