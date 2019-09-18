@@ -1,5 +1,5 @@
 # js-di
-This is a pretty simple DI-container for JavaScript.
+This is a pretty simple DI-container for ES6.
 ## Install
 
 ```
