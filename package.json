@@ -12,11 +12,11 @@
     "url": "git+https://github.com/pilov-pa/js-di.git"
   },
   "keywords": [
-    "di"
+    "di", "container", "ioc", "dependency injection", "inversion of control"
   ],
   "bugs": {
     "url": "https://github.com/pilov-pa/js-di/issues"
   },
   "homepage": "https://github.com/pilov-pa/js-di#readme",
-  "description": ""
+  "description": "A pretty simple DI-container for JavaScript"
 }
