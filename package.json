@@ -1,9 +1,12 @@
 {
   "name": "simple-js-di",
   "version": "0.1.2",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require @babel/register",
+    "start": "nodemon --exec babel-node ./src/index.js",
+    "build": "babel src --out-dir ./dist --source-maps",
+    "serve": "node ./dist/index.js"
   },
   "author": "Pilov Aleksey",
   "license": "ISC",
@@ -12,11 +15,26 @@
     "url": "git+https://github.com/pilov-pa/js-di.git"
   },
   "keywords": [
-    "di"
+    "di",
+    "container",
+    "ioc",
+    "dependency injection",
+    "inversion of control"
   ],
   "bugs": {
     "url": "https://github.com/pilov-pa/js-di/issues"
   },
   "homepage": "https://github.com/pilov-pa/js-di#readme",
-  "description": ""
+  "description": "A pretty simple DI-container for JavaScript",
+  "devDependencies": {
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "@babel/node": "^7.6.1",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/register": "^7.6.0",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0",
+    "nodemon": "^1.19.2"
+  }
 }
