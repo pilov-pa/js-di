@@ -57,14 +57,10 @@ Adds new dependency to the container.
 
 ##### Example
 ```js
-di.add("someService", SomeServiceClass, ["anotherService", "@anotherParameter"], true);
+di.add("someService", SomeServiceClass, ["anotherService", "@someParameter"], true);
 ```
 
 Method `add()` has 4 arguments:
-* name - the dependency alias
-* value - classname or value
-* dependencies - array of aliases for dependencies
-* shared
 
 #### Argument `name`
 This is an alias of the dependency that you should use to resolve it.
