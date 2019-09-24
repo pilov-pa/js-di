@@ -55,6 +55,11 @@ console.log(foo.getBarName()); // Bar name!
 ### Using method `add(name, value, dependencies, shared)`
 Adds new dependency to the container.
 
+##### Example
+```js
+di.add("someService", SomeServiceClass, ["anotherService", "@anotherParameter"], true);
+```
+
 Method `add()` has 4 arguments:
 * name - the dependency alias
 * value - classname or value
