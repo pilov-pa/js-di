@@ -42,6 +42,8 @@ function () {
     _classCallCheck(this, DI);
 
     _defineProperty(this, "services", {});
+
+    _defineProperty(this, "parameters", {});
   }
 
   _createClass(DI, [{
@@ -49,7 +51,59 @@ function () {
     value: function add(name, className) {
       var args = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
       var shared = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+
+      if (this.services.hasOwnProperty(name)) {
+        throw new Error("Service '" + name + "' already exists");
+      }
+
+      if (!(typeof className === 'function')) {
+        throw new Error("Parameter 'className' should be a class constructor");
+      }
+
       this.services[name] = new Service(name, className, args, shared);
+    }
+  }, {
+    key: "remove",
+    value: function remove(name) {
+      if (typeof this.services[name] === 'undefined') {
+        throw new Error("Service '" + name + "' not found");
+      }
+
+      delete this.services[name];
+    }
+  }, {
+    key: "has",
+    value: function has(name) {
+      return !(typeof this.services[name] === 'undefined');
+    }
+  }, {
+    key: "addParameters",
+    value: function addParameters(parameters) {
+      for (var parameterName in parameters) {
+        if (this.parameters.hasOwnProperty(parameterName)) {
+          throw new Error("Parameter '" + parameterName + "' already exists");
+        }
+
+        this.parameters[parameterName] = parameters[parameterName];
+      }
+    }
+  }, {
+    key: "getParameter",
+    value: function getParameter(parameterName) {
+      if (!this.parameters.hasOwnProperty(parameterName)) {
+        throw new Error("Parameter '" + parameterName + "' not found");
+      }
+
+      return this.parameters[parameterName];
+    }
+  }, {
+    key: "removeParameter",
+    value: function removeParameter(parameterName) {
+      if (!this.parameters.hasOwnProperty(parameterName)) {
+        throw new Error("Parameter '" + parameterName + "' not found");
+      }
+
+      delete this.parameters[parameterName];
     }
   }, {
     key: "resolve",
@@ -74,7 +128,20 @@ function () {
         try {
           for (var _iterator = args[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var arg = _step.value;
-            var resolvedArg = this.resolve(arg);
+            var resolvedArg = void 0;
+
+            if (arg.indexOf('@') === 0) {
+              var processedArgName = arg.substring(1);
+
+              if (!this.parameters.hasOwnProperty(processedArgName)) {
+                throw new Error("Parameter '" + processedArgName + "' not found");
+              }
+
+              resolvedArg = this.parameters[processedArgName];
+            } else {
+              resolvedArg = this.resolve(arg);
+            }
+
             resolvedArgs.push(resolvedArg);
           }
         } catch (err) {
