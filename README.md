@@ -44,7 +44,7 @@ console.log(foo.getBarName()); // Bar name!
 
 ## Api
 
-- [`add(name, value, dependencies, shared)`](#using-method-addname-value-dependencies-shared)
+- [`add(name, className, dependencies, shared)`](#using-method-addname-value-dependencies-shared)
 - [`resolve(name)`](#using-method-resolvename)
 - remove(name)
 - has(name)
@@ -65,7 +65,7 @@ Method `add()` has 4 arguments:
 #### Argument `name`
 This is an alias of the dependency that you should use to resolve it.
 
-#### Argument `value`
+#### Argument `className`
 
 This argument can be a class or a value. If it is a class then resolving returns the result of calls the class constructor.
 
@@ -76,7 +76,7 @@ If dependency name has prefix `@` then dependency is parameter else is another s
 Default the empty array.
 
 #### Argument `shared`
-If this argument is false, each  resolving will return a new instanse of the class. If this argument is true, only the first resolving will create a new instance, the next calls will use the alredy created instance. Default true.
+If this argument is false, each  resolving will return a new instance of the class. If this argument is true, only the first resolving will create a new instance, the next calls will use the alredy created instance. Default true.
 
 ### Using method `resolve(name)`
 Resolving the dependency by the name. All subdependencies will be resolved automatically if necessary.
