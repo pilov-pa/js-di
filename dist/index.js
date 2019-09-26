@@ -3,37 +3,19 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
+
+var _Service = _interopRequireDefault(require("./Service"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var Service = function Service(name, className) {
-  var args = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-  var shared = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
-
-  _classCallCheck(this, Service);
-
-  _defineProperty(this, "name", void 0);
-
-  _defineProperty(this, "className", void 0);
-
-  _defineProperty(this, "shared", true);
-
-  _defineProperty(this, "args", []);
-
-  _defineProperty(this, "compiled", null);
-
-  this.shared = shared;
-  this.name = name;
-  this.className = className;
-  this.args = args;
-};
 
 var DI =
 /*#__PURE__*/
@@ -60,7 +42,7 @@ function () {
         throw new Error("Parameter 'className' should be a class constructor");
       }
 
-      this.services[name] = new Service(name, className, args, shared);
+      this.services[name] = new _Service["default"](name, className, args, shared);
     }
   }, {
     key: "remove",
