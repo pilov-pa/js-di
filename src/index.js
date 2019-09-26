@@ -1,20 +1,8 @@
-class Service {
-    name;
-    className;
-    shared = true;
-    args = [];
-    compiled = null;
+import Service from './Service';
 
-    constructor(name, className, args = [], shared = true)
-    {
-        this.shared = shared;
-        this.name = name;
-        this.className = className;
-        this.args = args;
-    }
-}
 export default class DI {
     services = {};
+
     parameters = {};
 
     add(name, className, args = [], shared = true) {
@@ -74,7 +62,6 @@ export default class DI {
         const service = this.services[name];
 
         if (typeof service.className === 'function') {
-
             if (service.shared && service.compiled !== null) {
                 return service.compiled;
             }
