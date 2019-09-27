@@ -12,10 +12,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var Service = function Service(name, className) {
   var args = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
   var shared = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+  var tags = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : [];
 
   _classCallCheck(this, Service);
 
   _defineProperty(this, "name", void 0);
+
+  _defineProperty(this, "tags", []);
 
   _defineProperty(this, "className", void 0);
 
@@ -25,6 +28,7 @@ var Service = function Service(name, className) {
 
   _defineProperty(this, "compiled", null);
 
+  this.tags = tags;
   this.shared = shared;
   this.name = name;
   this.className = className;
