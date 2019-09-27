@@ -5,16 +5,37 @@ export default class DI {
 
     parameters = {};
 
-    add(name, className, args = [], shared = true) {
-        if (this.services.hasOwnProperty(name)) {
-            throw new Error("Service '" + name + "' already exists");
-        }
+    add(name, className, args = [], shared = true, tags = []) {
+        if (typeof name === 'object') {
+            this.services[name.name] = new Service(
+                name.name,
+                name.class,
+                name.args,
+                name.shared,
+                name.tags,
+            );
+        } else {
+            if (this.services.hasOwnProperty(name)) {
+                throw new Error("Service '" + name + "' already exists");
+            }
 
-        if (!(typeof className === 'function')) {
-            throw new Error("Parameter 'className' should be a class constructor");
-        }
+            if (!(typeof className === 'function')) {
+                throw new Error("Parameter 'className' should be a class constructor");
+            }
 
-        this.services[name] = new Service(name, className, args, shared);
+            this.services[name] = new Service(name, className, args, shared, tags);
+        }
+    }
+
+    getByTag(tag) {
+        let result = [];
+        for (const serviceName in this.services) {
+            const service = this.services[serviceName];
+            if (service.tags.indexOf(tag) !== -1) {
+                result.push(this.resolve(serviceName));
+            }
+        }
+        return result;
     }
 
     remove(name) {
