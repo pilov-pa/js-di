@@ -59,6 +59,16 @@ Adds new dependency to the container.
 ```js
 di.add("someService", SomeServiceClass, ["anotherService", "@someParameter"], true);
 ```
+or
+```js
+di.add({
+    name: "someService", 
+    class: SomeServiceClass, 
+    args: ["anotherService", "@someParameter"], 
+    shared: true,
+    tags: ["tag1", "tag2"],
+});
+```
 
 Method `add()` has 4 arguments:
 
