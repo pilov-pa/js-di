@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unversioned]
+### Added
+- Tags
+- New `add()` function notation
+
 ## [0.3.2] - 2019-09-26
 
 ### Added
