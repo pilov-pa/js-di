@@ -1,14 +1,20 @@
 # Changelog
 
+## [1.0.0] - 2019-09-30
+### Fixed
+- Readme
+
 ## [0.4.0] - 2019-09-30
 ### Added
 - Tags
 - New `add()` function notation
 - New function `addMulti()`
 - Update npm dependencies
+- Updated readme
+
+### Changed
 - Now service as dependency in parameter args should have prefix `:`, e. g. `"di.add("someService", SomeService, [":anotherService"]);`
 - Now any value can be passed to service dependencies
-- Updated readme
 
 ## [0.3.2] - 2019-09-26
 

@@ -1,6 +1,6 @@
 {
   "name": "simple-js-di",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
     "test": "mocha --require @babel/register",

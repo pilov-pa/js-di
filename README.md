@@ -91,7 +91,7 @@ Default the empty array.
 If this argument is false, each  resolving will return a new instance of the class. If this argument is true, only the first resolving will create a new instance, the next calls will use the alredy created instance. Default true.
 
 #### Argument `tags`
-Tags list. See [`getByTag()`](#using-method-get-by-tagtag)
+Tags list. See [`getByTag()`](#using-method-getbytagtag)
 
 ### Using method `resolve(name)`
 Resolving the dependency by the name. All subdependencies will be resolved automatically if necessary.
