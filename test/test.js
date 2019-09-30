@@ -52,6 +52,13 @@ describe('js-di', function() {
 
             assert.equal(resolved1.c, resolved2.c);
         });
+        it('add init by object', function() {
+            const di = new DI();
+            di.add({
+                name: 'name',
+                class: class Foo {},
+            });
+        });
     });
 
     describe('addParameters', function() {
@@ -179,6 +186,31 @@ describe('js-di', function() {
             });
             const foo = di.resolve('foo');
             assert.equal(foo.getBarName(), 'Bar name!');
-        })
+        });
+    });
+
+    describe('getByTag', function() {
+        it('getByTag', function() {
+            class Foo {
+                name = 'foo';
+            }
+            class Bar {
+                name = 'bar';
+            }
+            class Baz {
+                name = 'baz';
+            }
+            let di = new DI();
+            di.add('foo', Foo, [], true, ['test']);
+            di.add('bar', Bar, [], true);
+            di.add('baz', Baz, [], true, ['test']);
+
+            const services = di.getByTag('test');
+
+            assert.lengthOf(services, 2);
+
+            assert.equal(services[0].name, 'foo');
+            assert.equal(services[1].name, 'baz');
+        });
     });
 });

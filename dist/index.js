@@ -9,6 +9,8 @@ var _Service = _interopRequireDefault(require("./Service"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -33,16 +35,36 @@ function () {
     value: function add(name, className) {
       var args = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
       var shared = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+      var tags = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : [];
 
-      if (this.services.hasOwnProperty(name)) {
-        throw new Error("Service '" + name + "' already exists");
+      if (_typeof(name) === 'object') {
+        this.services[name.name] = new _Service["default"](name.name, name["class"], name.args, name.shared, name.tags);
+      } else {
+        if (this.services.hasOwnProperty(name)) {
+          throw new Error("Service '" + name + "' already exists");
+        }
+
+        if (!(typeof className === 'function')) {
+          throw new Error("Parameter 'className' should be a class constructor");
+        }
+
+        this.services[name] = new _Service["default"](name, className, args, shared, tags);
+      }
+    }
+  }, {
+    key: "getByTag",
+    value: function getByTag(tag) {
+      var result = [];
+
+      for (var serviceName in this.services) {
+        var service = this.services[serviceName];
+
+        if (service.tags.indexOf(tag) !== -1) {
+          result.push(this.resolve(serviceName));
+        }
       }
 
-      if (!(typeof className === 'function')) {
-        throw new Error("Parameter 'className' should be a class constructor");
-      }
-
-      this.services[name] = new _Service["default"](name, className, args, shared);
+      return result;
     }
   }, {
     key: "remove",
