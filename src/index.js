@@ -7,6 +7,9 @@ export default class DI {
 
     add(name, className, args = [], shared = true, tags = []) {
         if (typeof name === 'object') {
+            if (this.services.hasOwnProperty(name.name)) {
+                throw new Error("Service '" + name.name + "' already exists");
+            }
             this.services[name.name] = new Service(
                 name.name,
                 name.class,
@@ -24,6 +27,16 @@ export default class DI {
             }
 
             this.services[name] = new Service(name, className, args, shared, tags);
+        }
+    }
+
+    addMulti(config) {
+        if (!Array.isArray(config)) {
+            throw new Error('Config should be an array');
+        }
+
+        for (const serviceConfig of config) {
+            this.add(serviceConfig);
         }
     }
 

@@ -38,6 +38,10 @@ function () {
       var tags = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : [];
 
       if (_typeof(name) === 'object') {
+        if (this.services.hasOwnProperty(name.name)) {
+          throw new Error("Service '" + name.name + "' already exists");
+        }
+
         this.services[name.name] = new _Service["default"](name.name, name["class"], name.args, name.shared, name.tags);
       } else {
         if (this.services.hasOwnProperty(name)) {
@@ -49,6 +53,37 @@ function () {
         }
 
         this.services[name] = new _Service["default"](name, className, args, shared, tags);
+      }
+    }
+  }, {
+    key: "addMulti",
+    value: function addMulti(config) {
+      if (!Array.isArray(config)) {
+        throw new Error('Config should be an array');
+      }
+
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = config[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var serviceConfig = _step.value;
+          this.add(serviceConfig);
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
       }
     }
   }, {
@@ -125,13 +160,13 @@ function () {
 
         var args = service.args;
         var resolvedArgs = [];
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
 
         try {
-          for (var _iterator = args[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var arg = _step.value;
+          for (var _iterator2 = args[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var arg = _step2.value;
             var resolvedArg = void 0;
 
             if (arg.indexOf('@') === 0) {
@@ -149,16 +184,16 @@ function () {
             resolvedArgs.push(resolvedArg);
           }
         } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
+          _didIteratorError2 = true;
+          _iteratorError2 = err;
         } finally {
           try {
-            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-              _iterator["return"]();
+            if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+              _iterator2["return"]();
             }
           } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
+            if (_didIteratorError2) {
+              throw _iteratorError2;
             }
           }
         }

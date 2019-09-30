@@ -4,6 +4,7 @@
 ### Added
 - Tags
 - New `add()` function notation
+- New function `addMulti()`
 
 ## [0.3.2] - 2019-09-26
 

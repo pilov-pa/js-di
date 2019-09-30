@@ -59,6 +59,50 @@ describe('js-di', function() {
                 class: class Foo {},
             });
         });
+        it('add init by object already exists', function() {
+            const di = new DI();
+            di.add({
+                name: 'name',
+                class: class Foo {},
+            });
+
+            assert.throws(() => {
+                di.add({
+                    name: 'name',
+                    class: class Foo {},
+                });
+            }, "Service 'name' already exists");
+        });
+    });
+
+    describe('addMulti', function() {
+        it('addMulti success', function() {
+            const di = new DI();
+            class Foo {}
+            class Bar {}
+            class Baz {}
+            di.addMulti([
+                {
+                    name: 'name',
+                    class: Foo,
+                },
+                {
+                    name: 'test',
+                    class: Bar,
+                    arguments: [],
+                },
+                {
+                    name: 'test2',
+                    class: Baz,
+                    arguments: [],
+                    shared: false,
+                },
+            ]);
+
+            assert.equal(Foo.prototype.isPrototypeOf(di.resolve('name')), true);
+            assert.equal(Bar.prototype.isPrototypeOf(di.resolve('test')), true);
+            assert.equal(Baz.prototype.isPrototypeOf(di.resolve('test2')), true);
+        });
     });
 
     describe('addParameters', function() {
