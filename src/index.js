@@ -104,16 +104,19 @@ export default class DI {
             let resolvedArgs = [];
             for (let arg of args) {
                 let resolvedArg;
-                if (arg.indexOf('@') === 0) {
+                if (typeof arg === 'string' && arg.indexOf('@') === 0) {
                     const processedArgName = arg.substring(1);
 
                     if (!this.parameters.hasOwnProperty(processedArgName)) {
                         throw new Error("Parameter '" + processedArgName + "' not found");
                     }
 
-                    resolvedArg = this.parameters[processedArgName];
+                    resolvedArg = this.getParameter(processedArgName);
+                } else if(typeof arg === 'string' && arg.indexOf(':') === 0) {
+                    const processedArgName = arg.substring(1);
+                    resolvedArg = this.resolve(processedArgName);
                 } else {
-                    resolvedArg = this.resolve(arg);
+                    resolvedArg = arg;
                 }
                 resolvedArgs.push(resolvedArg);
             }

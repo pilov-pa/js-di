@@ -1,6 +1,6 @@
 {
   "name": "simple-js-di",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "main": "src/index.js",
   "scripts": {
     "test": "mocha --require @babel/register",
@@ -36,15 +36,15 @@
     "@babel/register": "^7.6.2",
     "babel-eslint": "^10.0.3",
     "chai": "^4.2.0",
-    "eslint": "^6.4.0",
+    "eslint": "^6.5.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "mocha": "^6.2.0",
-    "nodemon": "^1.19.2",
+    "mocha": "^6.2.1",
+    "nodemon": "^1.19.3",
     "npm": "^6.11.3",
     "prettier": "^1.18.2"
   }

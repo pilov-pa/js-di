@@ -206,30 +206,36 @@ describe('js-di', function() {
 
     describe('integration', function() {
         it('js-di', function() {
-            class Foo {
+            class Foo
+            {
+                bar = null;
                 constructor(bar) {
                     this.bar = bar;
                 }
 
-                getBarName() {
-                    return this.bar.name;
+                getGreeting() {
+                    return this.bar.greeting + ', ' + this.bar.name + '!';
                 }
             }
 
-            class Bar {
-                constructor(name) {
+            class Bar
+            {
+                name = null;
+                greeting = null;
+                constructor(greeting, name) {
+                    this.greeting = greeting;
                     this.name = name;
                 }
             }
 
             let di = new DI();
-            di.add('foo', Foo, ['bar']);
-            di.add('bar', Bar, ['@bar_name']);
+            di.add("foo", Foo, [":bar"]);
+            di.add("bar", Bar, ["Hello", "@name"]);
             di.addParameters({
-                bar_name: 'Bar name!',
+                'name': 'World',
             });
-            const foo = di.resolve('foo');
-            assert.equal(foo.getBarName(), 'Bar name!');
+            const foo = di.resolve("foo");
+            assert.equal(foo.getGreeting(), 'Hello, World!');
         });
     });
 

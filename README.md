@@ -18,28 +18,30 @@ class Foo
         this.bar = bar;
     }
 
-    getBarName() {
-        return this.bar.name;
+    getGreeting() {
+        return this.bar.greeting + ', ' + this.bar.name + '!';
     }
 }
 
 class Bar
 {
     name = null;
-    constructor(name) {
+    greeting = null;
+    constructor(greeting, name) {
+        this.greeting = greeting;
         this.name = name;
     }
 }
 
 let di = new DI();
-di.add("foo", Foo, ["bar"]);
-di.add("bar", Bar, ["@bar_name"]);
+di.add("foo", Foo, [":bar"]);
+di.add("bar", Bar, ["Hello", "@name"]);
 di.addParameters({
-    'bar_name': 'Bar name!',
+    'name': 'World',
 });
 const foo = di.resolve("foo");
 
-console.log(foo.getBarName()); // Bar name!
+console.log(foo.getGreeting()); // Hello, World!
 ```
 
 ## Api
@@ -57,20 +59,20 @@ Adds new dependency to the container.
 
 ##### Example
 ```js
-di.add("someService", SomeServiceClass, ["anotherService", "@someParameter"], true);
+di.add("someService", SomeServiceClass, [":anotherService", "@someParameter", 123], true);
 ```
 or
 ```js
 di.add({
     name: "someService", 
     class: SomeServiceClass, 
-    args: ["anotherService", "@someParameter"], 
+    args: [":anotherService", "@someParameter", 123], 
     shared: true,
     tags: ["tag1", "tag2"],
 });
 ```
 
-Method `add()` has 4 arguments:
+Method `add()` has 5 arguments:
 
 #### Argument `name`
 This is an alias of the dependency that you should use to resolve it.
@@ -79,8 +81,8 @@ This is an alias of the dependency that you should use to resolve it.
 
 This argument can be a class or a value. If it is a class then resolving returns the result of calls the class constructor.
 
-#### Argument `dependencies`
-This argument is array of service dependencies. 
+#### Argument `args`
+This argument is array of service dependencies should be pass to service constructor.
 All dependencies should be registered in the di-container. 
 If dependency name has prefix `@` then dependency is parameter else is another service/
 Default the empty array.
@@ -88,7 +90,13 @@ Default the empty array.
 #### Argument `shared`
 If this argument is false, each  resolving will return a new instance of the class. If this argument is true, only the first resolving will create a new instance, the next calls will use the alredy created instance. Default true.
 
+#### Argument `tags`
+Tags list. See [`getByTag()`](#using-method-get-by-tagtag)
+
 ### Using method `resolve(name)`
 Resolving the dependency by the name. All subdependencies will be resolved automatically if necessary.
 
 Method has only one argument: name.
+
+### Using method `getByTag(tag)`
+Get all services tagged by `tag`

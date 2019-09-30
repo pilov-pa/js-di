@@ -169,16 +169,20 @@ function () {
             var arg = _step2.value;
             var resolvedArg = void 0;
 
-            if (arg.indexOf('@') === 0) {
+            if (typeof arg === 'string' && arg.indexOf('@') === 0) {
               var processedArgName = arg.substring(1);
 
               if (!this.parameters.hasOwnProperty(processedArgName)) {
                 throw new Error("Parameter '" + processedArgName + "' not found");
               }
 
-              resolvedArg = this.parameters[processedArgName];
+              resolvedArg = this.getParameter(processedArgName);
+            } else if (typeof arg === 'string' && arg.indexOf(':') === 0) {
+              var _processedArgName = arg.substring(1);
+
+              resolvedArg = this.resolve(_processedArgName);
             } else {
-              resolvedArg = this.resolve(arg);
+              resolvedArg = arg;
             }
 
             resolvedArgs.push(resolvedArg);
