@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/pilov-pa/js-di.svg?branch=master)](https://travis-ci.org/pilov-pa/js-di)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/pilov-pa/js-di) 
 ![GitHub last commit](https://img.shields.io/github/last-commit/pilov-pa/js-di)
 ![NPM](https://img.shields.io/npm/l/simple-js-di)
