@@ -1,3 +1,6 @@
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/pilov-pa/js-di) 
+![GitHub last commit](https://img.shields.io/github/last-commit/pilov-pa/js-di)
+![NPM](https://img.shields.io/npm/l/simple-js-di)
 # js-di
 This is a pretty simple DI-container for ES6.
 ## Install
