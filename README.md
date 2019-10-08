@@ -10,7 +10,17 @@ This is a pretty simple DI-container for ES6.
 $ npm install simple-js-di
 ```
 
-## Example
+## A very simple example
+```javascript
+import DI from "simple-js-di";
+import FooClass from "./classes/FooClass";
+
+let di = new DI();
+di.add('foo', FooClass); // add FooClass as service named 'foo'
+const foo = di.resolve('foo'); // get an instance of FooClass
+```
+
+## One more example
 
 ```javascript
 import DI from "simple-js-di";
@@ -47,6 +57,8 @@ const foo = di.resolve("foo");
 
 console.log(foo.getGreeting()); // Hello, World!
 ```
+
+For more examples see https://github.com/pilov-pa/js-di/tree/master/examples
 
 ## Api
 
@@ -88,11 +100,15 @@ This argument can be a class or a value. If it is a class then resolving returns
 #### Argument `args`
 This argument is array of service dependencies should be pass to service constructor.
 All dependencies should be registered in the di-container. 
-If dependency name has prefix `@` then dependency is parameter else is another service/
+If dependency name has prefix `@` then dependency is an another service.
+If dependency name has prefix `:` then dependency is a parameter.
+Otherwise, the dependency is the passed value as is.
 Default the empty array.
 
 #### Argument `shared`
-If this argument is false, each  resolving will return a new instance of the class. If this argument is true, only the first resolving will create a new instance, the next calls will use the alredy created instance. Default true.
+If this argument is false, each  resolving will return a new instance of the class. 
+If this argument is true, only the first resolving will create a new instance, 
+the next calls will use the alredy created instance. Default true.
 
 #### Argument `tags`
 Tags list. See [`getByTag()`](#using-method-getbytagtag)
