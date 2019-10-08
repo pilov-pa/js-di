@@ -1,5 +1,15 @@
 # Changelog
 
+## Master
+### Fixed
+- Updated outdated dependencies
+
+### Added
+- Examples
+
+### Updated
+- Readme
+
 ## [1.0.0] - 2019-09-30
 ### Fixed
 - Readme
