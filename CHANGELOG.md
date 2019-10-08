@@ -1,6 +1,6 @@
 # Changelog
 
-## Master
+## [1.0.1] - 2019-10-08
 ### Fixed
 - Updated outdated dependencies
 
