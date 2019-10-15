@@ -20,7 +20,9 @@
     "container",
     "ioc",
     "dependency injection",
-    "inversion of control"
+    "inversion of control",
+    "dependency inversion",
+    "service-locator"
   ],
   "bugs": {
     "url": "https://github.com/pilov-pa/js-di/issues"
@@ -28,15 +30,15 @@
   "homepage": "https://github.com/pilov-pa/js-di#readme",
   "description": "A pretty simple DI-container for JavaScript",
   "devDependencies": {
-    "@babel/cli": "^7.6.2",
-    "@babel/core": "^7.6.2",
-    "@babel/node": "^7.6.2",
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/node": "^7.6.3",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/preset-env": "^7.6.2",
+    "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.6.2",
     "babel-eslint": "^10.0.3",
     "chai": "^4.2.0",
-    "eslint": "^6.5.0",
+    "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.4.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^10.0.0",
@@ -45,7 +47,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "mocha": "^6.2.1",
     "nodemon": "^1.19.3",
-    "npm": "^6.11.3",
     "prettier": "^1.18.2"
-  }
+  },
+  "dependencies": {}
 }

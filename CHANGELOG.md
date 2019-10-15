@@ -1,5 +1,10 @@
 # Changelog
 
+## Master
+### Changed
+- Code improvements, +10% performance
+- Updated outdated dependencies
+
 ## [1.0.1] - 2019-10-08
 ### Fixed
 - Updated outdated dependencies
