@@ -5,9 +5,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _Service = _interopRequireDefault(require("./Service"));
+function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -42,7 +44,14 @@ function () {
           throw new Error("Service '" + name.name + "' already exists");
         }
 
-        this.services[name.name] = new _Service["default"](name.name, name["class"], name.args, name.shared, name.tags);
+        this.services[name.name] = {
+          name: name.name,
+          className: name["class"],
+          args: name.args,
+          shared: name.shared,
+          tags: name.tags,
+          compiled: null
+        };
       } else {
         if (this.services.hasOwnProperty(name)) {
           throw new Error("Service '" + name + "' already exists");
@@ -52,7 +61,14 @@ function () {
           throw new Error("Parameter 'className' should be a class constructor");
         }
 
-        this.services[name] = new _Service["default"](name, className, args, shared, tags);
+        this.services[name] = {
+          name: name,
+          className: className,
+          args: args,
+          shared: shared,
+          tags: tags,
+          compiled: null
+        };
       }
     }
   }, {
@@ -153,66 +169,46 @@ function () {
 
       var service = this.services[name];
 
-      if (typeof service.className === 'function') {
-        if (service.shared && service.compiled !== null) {
-          return service.compiled;
-        }
-
-        var args = service.args;
-        var resolvedArgs = [];
-        var _iteratorNormalCompletion2 = true;
-        var _didIteratorError2 = false;
-        var _iteratorError2 = undefined;
-
-        try {
-          for (var _iterator2 = args[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var arg = _step2.value;
-            var resolvedArg = void 0;
-
-            if (typeof arg === 'string' && arg.indexOf('@') === 0) {
-              var processedArgName = arg.substring(1);
-
-              if (!this.parameters.hasOwnProperty(processedArgName)) {
-                throw new Error("Parameter '" + processedArgName + "' not found");
-              }
-
-              resolvedArg = this.getParameter(processedArgName);
-            } else if (typeof arg === 'string' && arg.indexOf(':') === 0) {
-              var _processedArgName = arg.substring(1);
-
-              resolvedArg = this.resolve(_processedArgName);
-            } else {
-              resolvedArg = arg;
-            }
-
-            resolvedArgs.push(resolvedArg);
-          }
-        } catch (err) {
-          _didIteratorError2 = true;
-          _iteratorError2 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-              _iterator2["return"]();
-            }
-          } finally {
-            if (_didIteratorError2) {
-              throw _iteratorError2;
-            }
-          }
-        }
-
-        var className = service.className;
-        var result = Reflect.construct(className, resolvedArgs);
-
-        if (service.shared) {
-          service.compiled = result;
-        }
-
-        return result;
+      if (service.shared && service.compiled !== null) {
+        return service.compiled;
       }
 
-      return service.className;
+      var resolvedArgs = [];
+
+      for (var argIndex in service.args) {
+        var arg = service.args[argIndex];
+        var resolvedArg = void 0;
+
+        if (typeof arg === 'string') {
+          if (arg.indexOf('@') === 0) {
+            var processedArgName = arg.substring(1);
+
+            if (!this.parameters.hasOwnProperty(processedArgName)) {
+              throw new Error("Parameter '" + processedArgName + "' not found");
+            }
+
+            resolvedArg = this.getParameter(processedArgName);
+          } else if (arg.indexOf(':') === 0) {
+            var _processedArgName = arg.substring(1);
+
+            resolvedArg = this.resolve(_processedArgName);
+          } else {
+            resolvedArg = arg;
+          }
+        } else {
+          resolvedArg = arg;
+        }
+
+        resolvedArgs.push(resolvedArg);
+      }
+
+      var result = _construct(service.className, resolvedArgs);
+
+      if (service.shared) {
+        service.compiled = result;
+      }
+
+      return result;
     }
   }]);
 

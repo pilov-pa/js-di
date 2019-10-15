@@ -1,5 +1,3 @@
-import Service from './Service';
-
 export default class DI {
     services = {};
 
@@ -10,13 +8,15 @@ export default class DI {
             if (this.services.hasOwnProperty(name.name)) {
                 throw new Error("Service '" + name.name + "' already exists");
             }
-            this.services[name.name] = new Service(
-                name.name,
-                name.class,
-                name.args,
-                name.shared,
-                name.tags,
-            );
+
+            this.services[name.name] = {
+                name: name.name,
+                className: name.class,
+                args: name.args,
+                shared: name.shared,
+                tags: name.tags,
+                compiled: null,
+            };
         } else {
             if (this.services.hasOwnProperty(name)) {
                 throw new Error("Service '" + name + "' already exists");
@@ -26,7 +26,14 @@ export default class DI {
                 throw new Error("Parameter 'className' should be a class constructor");
             }
 
-            this.services[name] = new Service(name, className, args, shared, tags);
+            this.services[name] = {
+                name: name,
+                className: className,
+                args: args,
+                shared: shared,
+                tags: tags,
+                compiled: null,
+            };
         }
     }
 
@@ -34,7 +41,6 @@ export default class DI {
         if (!Array.isArray(config)) {
             throw new Error('Config should be an array');
         }
-
         for (const serviceConfig of config) {
             this.add(serviceConfig);
         }
@@ -95,16 +101,16 @@ export default class DI {
 
         const service = this.services[name];
 
-        if (typeof service.className === 'function') {
-            if (service.shared && service.compiled !== null) {
-                return service.compiled;
-            }
+        if (service.shared && service.compiled !== null) {
+            return service.compiled;
+        }
 
-            const args = service.args;
-            let resolvedArgs = [];
-            for (let arg of args) {
-                let resolvedArg;
-                if (typeof arg === 'string' && arg.indexOf('@') === 0) {
+        let resolvedArgs = [];
+        for (const argIndex in service.args) {
+            const arg = service.args[argIndex];
+            let resolvedArg;
+            if (typeof arg === 'string') {
+                if (arg.indexOf('@') === 0) {
                     const processedArgName = arg.substring(1);
 
                     if (!this.parameters.hasOwnProperty(processedArgName)) {
@@ -112,22 +118,22 @@ export default class DI {
                     }
 
                     resolvedArg = this.getParameter(processedArgName);
-                } else if(typeof arg === 'string' && arg.indexOf(':') === 0) {
+                } else if (arg.indexOf(':') === 0) {
                     const processedArgName = arg.substring(1);
                     resolvedArg = this.resolve(processedArgName);
                 } else {
                     resolvedArg = arg;
                 }
-                resolvedArgs.push(resolvedArg);
+            } else {
+                resolvedArg = arg;
             }
-            const className = service.className;
-            const result = Reflect.construct(className, resolvedArgs);
-            if (service.shared) {
-                service.compiled = result;
-            }
-            return result;
+            resolvedArgs.push(resolvedArg);
         }
 
-        return service.className;
+        const result = new service.className(...resolvedArgs);
+        if (service.shared) {
+            service.compiled = result;
+        }
+        return result;
     }
 }
