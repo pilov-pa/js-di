@@ -1,6 +1,10 @@
 # Changelog
 
 ## Master
+### Added
+- function hasParameter()
+
+## [1.0.2] - 2019-10-15
 ### Changed
 - Code improvements, +10% performance
 - Updated outdated dependencies
