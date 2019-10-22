@@ -156,6 +156,24 @@ describe('js-di', function() {
         });
     });
 
+    describe('hasParameter', function() {
+        it('true', function() {
+            const di = new DI();
+
+            di.addParameters({'test': 'test'});
+
+            assert.isTrue(di.hasParameter('test'));
+        });
+
+        it('false', function() {
+            const di = new DI();
+
+            di.addParameters({'test': 'test'});
+
+            assert.isFalse(di.hasParameter('test2'));
+        });
+    });
+
     describe('resolve', function() {
         it('resolve service not found', function() {
             const di = new DI();

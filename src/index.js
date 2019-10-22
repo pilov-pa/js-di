@@ -86,6 +86,10 @@ export default class DI {
         return this.parameters[parameterName];
     }
 
+    hasParameter(parameterName) {
+        return this.parameters.hasOwnProperty(parameterName);
+    }
+
     removeParameter(parameterName) {
         if (!this.parameters.hasOwnProperty(parameterName)) {
             throw new Error("Parameter '" + parameterName + "' not found");

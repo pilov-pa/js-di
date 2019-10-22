@@ -152,6 +152,11 @@ function () {
       return this.parameters[parameterName];
     }
   }, {
+    key: "hasParameter",
+    value: function hasParameter(parameterName) {
+      return this.parameters.hasOwnProperty(parameterName);
+    }
+  }, {
     key: "removeParameter",
     value: function removeParameter(parameterName) {
       if (!this.parameters.hasOwnProperty(parameterName)) {
