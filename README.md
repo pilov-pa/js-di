@@ -69,6 +69,7 @@ For more examples see https://github.com/pilov-pa/js-di/tree/master/examples
 - addParameters(parameters)
 - getParameter(parameterName)
 - removeParameter(parameterName)
+- hasParameter(parameterName)
 
 ### Using method `add(name, value, dependencies, shared)`
 Adds new dependency to the container.
