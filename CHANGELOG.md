@@ -3,6 +3,7 @@
 ## Master
 ### Added
 - function hasParameter()
+- function addParameter()
 
 ## [1.0.2] - 2019-10-15
 ### Changed

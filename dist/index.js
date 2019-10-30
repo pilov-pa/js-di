@@ -132,14 +132,19 @@ function () {
       return !(typeof this.services[name] === 'undefined');
     }
   }, {
+    key: "addParameter",
+    value: function addParameter(name, value) {
+      if (this.parameters.hasOwnProperty(name)) {
+        throw new Error("Parameter '" + name + "' already exists");
+      }
+
+      this.parameters[name] = value;
+    }
+  }, {
     key: "addParameters",
     value: function addParameters(parameters) {
       for (var parameterName in parameters) {
-        if (this.parameters.hasOwnProperty(parameterName)) {
-          throw new Error("Parameter '" + parameterName + "' already exists");
-        }
-
-        this.parameters[parameterName] = parameters[parameterName];
+        this.addParameter(parameterName, parameters[parameterName]);
       }
     }
   }, {

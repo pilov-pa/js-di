@@ -105,6 +105,24 @@ describe('js-di', function() {
         });
     });
 
+    describe('addParameter', function() {
+        it('success', function() {
+            const di = new DI();
+            di.addParameter('foo', 'value');
+            assert.equal(di.getParameter('foo'), 'value');
+        });
+
+        it('exists', function() {
+            const di = new DI();
+            di.addParameter('foo', 'value');
+            function addParameter() {
+                di.addParameter('foo', 'value');
+            }
+
+            assert.throws(addParameter, "Parameter 'foo' already exists");
+        });
+    });
+
     describe('addParameters', function() {
         it('addParameters', function() {
             const di = new DI();
@@ -160,7 +178,7 @@ describe('js-di', function() {
         it('true', function() {
             const di = new DI();
 
-            di.addParameters({'test': 'test'});
+            di.addParameters({ test: 'test' });
 
             assert.isTrue(di.hasParameter('test'));
         });
@@ -168,7 +186,7 @@ describe('js-di', function() {
         it('false', function() {
             const di = new DI();
 
-            di.addParameters({'test': 'test'});
+            di.addParameters({ test: 'test' });
 
             assert.isFalse(di.hasParameter('test2'));
         });
@@ -224,8 +242,7 @@ describe('js-di', function() {
 
     describe('integration', function() {
         it('js-di', function() {
-            class Foo
-            {
+            class Foo {
                 bar = null;
                 constructor(bar) {
                     this.bar = bar;
@@ -236,8 +253,7 @@ describe('js-di', function() {
                 }
             }
 
-            class Bar
-            {
+            class Bar {
                 name = null;
                 greeting = null;
                 constructor(greeting, name) {
@@ -247,12 +263,12 @@ describe('js-di', function() {
             }
 
             let di = new DI();
-            di.add("foo", Foo, [":bar"]);
-            di.add("bar", Bar, ["Hello", "@name"]);
+            di.add('foo', Foo, [':bar']);
+            di.add('bar', Bar, ['Hello', '@name']);
             di.addParameters({
-                'name': 'World',
+                name: 'World',
             });
-            const foo = di.resolve("foo");
+            const foo = di.resolve('foo');
             assert.equal(foo.getGreeting(), 'Hello, World!');
         });
     });
