@@ -1,6 +1,6 @@
 # Changelog
 
-## Master
+## [1.1.0] - 2019-10-30
 ### Added
 - function hasParameter()
 - function addParameter()
