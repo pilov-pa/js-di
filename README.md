@@ -63,10 +63,12 @@ For more examples see https://github.com/pilov-pa/js-di/tree/master/examples
 ## Api
 
 - [`add(name, className, dependencies, shared)`](#using-method-addname-value-dependencies-shared)
+- addMulti(config)
 - [`resolve(name)`](#using-method-resolvename)
 - remove(name)
 - has(name)
 - addParameters(parameters)
+- addParameter(name, value)
 - getParameter(parameterName)
 - removeParameter(parameterName)
 - hasParameter(parameterName)
