@@ -192,11 +192,6 @@ function () {
         if (typeof arg === 'string') {
           if (arg.indexOf('@') === 0) {
             var processedArgName = arg.substring(1);
-
-            if (!this.parameters.hasOwnProperty(processedArgName)) {
-              throw new Error("Parameter '" + processedArgName + "' not found");
-            }
-
             resolvedArg = this.getParameter(processedArgName);
           } else if (arg.indexOf(':') === 0) {
             var _processedArgName = arg.substring(1);

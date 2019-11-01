@@ -11,6 +11,14 @@ describe('js-di', function() {
             assert.equal(Foo.prototype.isPrototypeOf(resolved), true);
         });
 
+        it('wrong constructor', function() {
+            const di = new DI();
+            assert.throws(
+                () => di.add('foo', 'test'),
+                "Parameter 'className' should be a class constructor",
+            );
+        });
+
         it('add already exists', function() {
             class Foo {}
             const di = new DI();
@@ -39,7 +47,6 @@ describe('js-di', function() {
         it('add shared', function() {
             let v = 0;
             class Foo {
-                static v = 0;
                 constructor() {
                     v++;
                     this.c = v;
@@ -76,6 +83,11 @@ describe('js-di', function() {
     });
 
     describe('addMulti', function() {
+        it('Config should be an array', function() {
+            const di = new DI();
+            assert.throws(() => di.addMulti('test'), 'Config should be an array');
+        });
+
         it('addMulti success', function() {
             const di = new DI();
             class Foo {}
