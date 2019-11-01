@@ -1,6 +1,6 @@
 # Changelog
 
-## Master
+## [1.1.1] - 2019-11-01
 - Increase tests coverage
 - Code improvements
 
